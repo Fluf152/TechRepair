@@ -1,0 +1,36 @@
+﻿<Window x:Class="TechRepair.Windows.ClientOrderAddWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Add New Order" Height="400" Width="600"
+        WindowStartupLocation="CenterScreen">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Text="Тип техники:" Grid.Row="0" Grid.Column="0" Margin="5"/>
+        <ComboBox x:Name="TechTypeCombo" Grid.Row="0" Grid.Column="1" Margin="5" 
+                  SelectionChanged="TechTypeCombo_SelectionChanged"/>
+
+        <TextBlock Text="Модель:" Grid.Row="1" Grid.Column="0" Margin="5"/>
+        <ComboBox x:Name="ModelCombo" Grid.Row="1" Grid.Column="1" Margin="5"/>
+
+        <TextBlock Text="Описание проблемы:" Grid.Row="2" Grid.Column="0" Margin="5"/>
+        <TextBox x:Name="ProblemBox" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" 
+                 Margin="5" TextWrapping="Wrap" AcceptsReturn="True"/>
+
+        <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" 
+                    Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
+            <Button Content="Сохранить" Width="100" Margin="5" Click="SaveButton_Click"/>
+            <Button Content="Отмена" Width="100" Margin="5" Click="CancelButton_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

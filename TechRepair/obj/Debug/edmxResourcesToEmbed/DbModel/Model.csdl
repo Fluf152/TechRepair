@@ -1,0 +1,201 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TechRepairModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="ClientsOrder">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="StartDate" Type="DateTime" Precision="0" />
+    <Property Name="ModelId" Type="Int32" />
+    <Property Name="ProblemDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="OrderStatusId" Type="Int32" />
+    <Property Name="CompliteDate" Type="DateTime" Precision="0" />
+    <Property Name="MasterId" Type="Int32" />
+    <Property Name="ClientId" Type="Int32" />
+    <NavigationProperty Name="OrderStatusType" Relationship="Self.FK_ClientsOrder_To_OrderStatusType" FromRole="ClientsOrder" ToRole="OrderStatusType" />
+    <NavigationProperty Name="SystemUser" Relationship="Self.FK_ClientsOrder_To_SystemUser_Client" FromRole="ClientsOrder" ToRole="SystemUser" />
+    <NavigationProperty Name="SystemUser1" Relationship="Self.FK_ClientsOrder_To_SystemUser_Master" FromRole="ClientsOrder" ToRole="SystemUser" />
+    <NavigationProperty Name="TechModel" Relationship="Self.FK_ClientsOrder_To_TechModel" FromRole="ClientsOrder" ToRole="TechModel" />
+    <NavigationProperty Name="OrderMasterComment" Relationship="Self.FK_OrderMasterComment_To_ClientsOrder" FromRole="ClientsOrder" ToRole="OrderMasterComment" />
+  </EntityType>
+  <EntityType Name="OrderMasterComment">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Comment" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="OrderId" Type="Int32" />
+    <NavigationProperty Name="ClientsOrder" Relationship="Self.FK_OrderMasterComment_To_ClientsOrder" FromRole="OrderMasterComment" ToRole="ClientsOrder" />
+  </EntityType>
+  <EntityType Name="OrderStatusType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="StatusName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="ClientsOrder" Relationship="Self.FK_ClientsOrder_To_OrderStatusType" FromRole="OrderStatusType" ToRole="ClientsOrder" />
+  </EntityType>
+  <EntityType Name="SystemUser">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="LastName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="FirstName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="FatherName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="Phone" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+    <Property Name="UserLogin" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="UserPassword" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="UserRoleId" Type="Int32" />
+    <NavigationProperty Name="ClientsOrder" Relationship="Self.FK_ClientsOrder_To_SystemUser_Client" FromRole="SystemUser" ToRole="ClientsOrder" />
+    <NavigationProperty Name="ClientsOrder1" Relationship="Self.FK_ClientsOrder_To_SystemUser_Master" FromRole="SystemUser" ToRole="ClientsOrder" />
+    <NavigationProperty Name="UserRole" Relationship="Self.FK_SystemUser_To_UserRole" FromRole="SystemUser" ToRole="UserRole" />
+  </EntityType>
+  <EntityType Name="Tech">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="TechName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="TechModel" Relationship="Self.Fk_TechModel_To_Tech" FromRole="Tech" ToRole="TechModel" />
+  </EntityType>
+  <EntityType Name="TechModel">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="TechId" Type="Int32" />
+    <Property Name="TechModelName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="ClientsOrder" Relationship="Self.FK_ClientsOrder_To_TechModel" FromRole="TechModel" ToRole="ClientsOrder" />
+    <NavigationProperty Name="Tech" Relationship="Self.Fk_TechModel_To_Tech" FromRole="TechModel" ToRole="Tech" />
+  </EntityType>
+  <EntityType Name="UserRole">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="RoleName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="SystemUser" Relationship="Self.FK_SystemUser_To_UserRole" FromRole="UserRole" ToRole="SystemUser" />
+  </EntityType>
+  <Association Name="FK_ClientsOrder_To_OrderStatusType">
+    <End Role="OrderStatusType" Type="Self.OrderStatusType" Multiplicity="0..1" />
+    <End Role="ClientsOrder" Type="Self.ClientsOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OrderStatusType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ClientsOrder">
+        <PropertyRef Name="OrderStatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ClientsOrder_To_SystemUser_Client">
+    <End Role="SystemUser" Type="Self.SystemUser" Multiplicity="0..1" />
+    <End Role="ClientsOrder" Type="Self.ClientsOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SystemUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ClientsOrder">
+        <PropertyRef Name="ClientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ClientsOrder_To_SystemUser_Master">
+    <End Role="SystemUser" Type="Self.SystemUser" Multiplicity="0..1" />
+    <End Role="ClientsOrder" Type="Self.ClientsOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SystemUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ClientsOrder">
+        <PropertyRef Name="MasterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ClientsOrder_To_TechModel">
+    <End Role="TechModel" Type="Self.TechModel" Multiplicity="0..1" />
+    <End Role="ClientsOrder" Type="Self.ClientsOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TechModel">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ClientsOrder">
+        <PropertyRef Name="ModelId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderMasterComment_To_ClientsOrder">
+    <End Role="ClientsOrder" Type="Self.ClientsOrder" Multiplicity="0..1" />
+    <End Role="OrderMasterComment" Type="Self.OrderMasterComment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ClientsOrder">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderMasterComment">
+        <PropertyRef Name="OrderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SystemUser_To_UserRole">
+    <End Role="UserRole" Type="Self.UserRole" Multiplicity="0..1" />
+    <End Role="SystemUser" Type="Self.SystemUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserRole">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SystemUser">
+        <PropertyRef Name="UserRoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Fk_TechModel_To_Tech">
+    <End Role="Tech" Type="Self.Tech" Multiplicity="0..1" />
+    <End Role="TechModel" Type="Self.TechModel" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tech">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TechModel">
+        <PropertyRef Name="TechId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="TechRepairEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="ClientsOrder" EntityType="Self.ClientsOrder" />
+    <EntitySet Name="OrderMasterComment" EntityType="Self.OrderMasterComment" />
+    <EntitySet Name="OrderStatusType" EntityType="Self.OrderStatusType" />
+    <EntitySet Name="SystemUser" EntityType="Self.SystemUser" />
+    <EntitySet Name="Tech" EntityType="Self.Tech" />
+    <EntitySet Name="TechModel" EntityType="Self.TechModel" />
+    <EntitySet Name="UserRole" EntityType="Self.UserRole" />
+    <AssociationSet Name="FK_ClientsOrder_To_OrderStatusType" Association="Self.FK_ClientsOrder_To_OrderStatusType">
+      <End Role="OrderStatusType" EntitySet="OrderStatusType" />
+      <End Role="ClientsOrder" EntitySet="ClientsOrder" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ClientsOrder_To_SystemUser_Client" Association="Self.FK_ClientsOrder_To_SystemUser_Client">
+      <End Role="SystemUser" EntitySet="SystemUser" />
+      <End Role="ClientsOrder" EntitySet="ClientsOrder" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ClientsOrder_To_SystemUser_Master" Association="Self.FK_ClientsOrder_To_SystemUser_Master">
+      <End Role="SystemUser" EntitySet="SystemUser" />
+      <End Role="ClientsOrder" EntitySet="ClientsOrder" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ClientsOrder_To_TechModel" Association="Self.FK_ClientsOrder_To_TechModel">
+      <End Role="TechModel" EntitySet="TechModel" />
+      <End Role="ClientsOrder" EntitySet="ClientsOrder" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderMasterComment_To_ClientsOrder" Association="Self.FK_OrderMasterComment_To_ClientsOrder">
+      <End Role="ClientsOrder" EntitySet="ClientsOrder" />
+      <End Role="OrderMasterComment" EntitySet="OrderMasterComment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SystemUser_To_UserRole" Association="Self.FK_SystemUser_To_UserRole">
+      <End Role="UserRole" EntitySet="UserRole" />
+      <End Role="SystemUser" EntitySet="SystemUser" />
+    </AssociationSet>
+    <AssociationSet Name="Fk_TechModel_To_Tech" Association="Self.Fk_TechModel_To_Tech">
+      <End Role="Tech" EntitySet="Tech" />
+      <End Role="TechModel" EntitySet="TechModel" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

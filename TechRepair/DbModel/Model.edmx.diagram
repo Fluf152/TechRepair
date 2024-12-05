@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3ad7538904d14846916453f7a27d11a0" Name="Diagram1">
+        <EntityTypeShape EntityType="TechRepairModel.ClientsOrder" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="TechRepairModel.OrderMasterComment" Width="1.5" PointX="7.5" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TechRepairModel.OrderStatusType" Width="1.5" PointX="3" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TechRepairModel.SystemUser" Width="1.5" PointX="3" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TechRepairModel.Tech" Width="1.5" PointX="0.75" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TechRepairModel.TechModel" Width="1.5" PointX="3" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TechRepairModel.UserRole" Width="1.5" PointX="0.75" PointY="2" IsExpanded="true" />
+        <AssociationConnector Association="TechRepairModel.FK_ClientsOrder_To_OrderStatusType" ManuallyRouted="false" />
+        <AssociationConnector Association="TechRepairModel.FK_ClientsOrder_To_SystemUser_Client" ManuallyRouted="false" />
+        <AssociationConnector Association="TechRepairModel.FK_ClientsOrder_To_SystemUser_Master" ManuallyRouted="false" />
+        <AssociationConnector Association="TechRepairModel.FK_ClientsOrder_To_TechModel" ManuallyRouted="false" />
+        <AssociationConnector Association="TechRepairModel.FK_OrderMasterComment_To_ClientsOrder" ManuallyRouted="false" />
+        <AssociationConnector Association="TechRepairModel.FK_SystemUser_To_UserRole" ManuallyRouted="false" />
+        <AssociationConnector Association="TechRepairModel.Fk_TechModel_To_Tech" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
